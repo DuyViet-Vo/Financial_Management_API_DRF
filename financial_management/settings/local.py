@@ -9,7 +9,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "financial_management",
+        "NAME": "financial_management2",
         "USER": "postgres",
         "PASSWORD": "vdv1810",
         "HOST": "localhost",
