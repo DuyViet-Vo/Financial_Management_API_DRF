@@ -2,9 +2,10 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from financial_management.users.models import User
-from financial_management.users.serializers import UserRegistrationSerializer
+from financial_management.users.serializers import CustomTokenObtainPairSerializer, UserRegistrationSerializer
 
 
 class UserRegisterView(CreateAPIView):
@@ -23,3 +24,14 @@ class UserRegisterView(CreateAPIView):
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        response_data = serializer.validated_data
+        return Response(response_data, status=status.HTTP_200_OK)

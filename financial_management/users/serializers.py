@@ -1,7 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from rest_framework import serializers
-from rest_framework.exceptions import AuthenticationFailed, ParseError
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from financial_management.core.custom_parse_errors import CustomParseError
 from financial_management.users.models import User
@@ -56,3 +57,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         if not (len(value) >= 6):
             raise CustomParseError(9013, "Password must be over 6 characters!")
         return value
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        try:
+            data = super().validate(attrs)
+            data.update({"user_id": self.user.id, "email": self.user.email, "username": self.user.username})
+            return data
+        except Exception:
+            raise AuthenticationFailed("Email or password is incorrect!")

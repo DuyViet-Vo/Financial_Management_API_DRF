@@ -20,19 +20,21 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from financial_management.users.views import UserRegisterView
+from financial_management.groups.views import ListCreateGroupView, UpdateDeleteGroupView
+from financial_management.users.views import CustomTokenObtainPairView, UserRegisterView
 
 schema_view = get_schema_view(
     openapi.Info(
         title="Financial Management API",
         default_version="v1",
-        description="API documentation",
+        description="API documentation design by Duy Viet Vo",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="duyviet1810@gmail.com"),
-        license=openapi.License(name="BSD License"),
+        license=openapi.License(name="DUY VIET VO"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
+    authentication_classes=[],
 )
 
 urlpatterns = [
@@ -54,4 +56,9 @@ urlpatterns = [
     ),
     # register
     path("api/register", UserRegisterView.as_view(), name="register"),
+    # login
+    path("api/login", CustomTokenObtainPairView.as_view(), name="login"),
+    # groups
+    path("api/groups", ListCreateGroupView.as_view(), name="groups"),
+    path("api/groups/<int:id>", UpdateDeleteGroupView.as_view(), name="groups-id"),
 ]
