@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from financial_management.groups.models import Group
-from financial_management.groups.serializers import GroupSerializer
+from financial_management.groups.serializers import GroupSerializer, ReadGroupSerializer
 
 
 class ListCreateGroupView(ListCreateAPIView):
@@ -13,6 +13,11 @@ class ListCreateGroupView(ListCreateAPIView):
     queryset = Group.objects.all()
     permission_classes = [IsAuthenticated]
 
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return ReadGroupSerializer
+        return GroupSerializer
+
 
 class UpdateDeleteGroupView(RetrieveUpdateDestroyAPIView):
     model = Group
@@ -20,3 +25,8 @@ class UpdateDeleteGroupView(RetrieveUpdateDestroyAPIView):
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return ReadGroupSerializer
+        return GroupSerializer

@@ -67,3 +67,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             return data
         except Exception:
             raise AuthenticationFailed("Email or password is incorrect!")
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "phone", "email", "created_at", "avatar"]
