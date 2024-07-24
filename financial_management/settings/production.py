@@ -4,7 +4,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["yourdomain.com"]
+ALLOWED_HOSTS = ["192.168.35.158"]
 
 DATABASES = {
     "default": {
@@ -12,7 +12,7 @@ DATABASES = {
         "NAME": "financial_management",
         "USER": "postgres",
         "PASSWORD": "vdv18102001",
-        "HOST": "db-drf-postgreesql.cfkygo8i0xnp.ap-southeast-1.rds.amazonaws.com",
+        "HOST": "localhost",
         "PORT": "5432",
     }
 }
